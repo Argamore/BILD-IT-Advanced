@@ -8,14 +8,14 @@ public class Zadatak3 {
 		
 		Scanner unos = new Scanner(System.in);
 		// uzimanje godine od korisnika
-		System.out.println("Unesite godinu ");
+		System.out.println("Unesite godinu: ");
 		int godina = unos.nextInt();
 		// i mjeseca
-		System.out.println("Unesite mjesec ");
+		System.out.println("Unesite prva tri slova mjeseca: ");
 		String mjesec = unos.next();
 		mjesec.toLowerCase();
 		unos.close();
-		//u zavisnosti od toga koji je mjesec unesen, stampa se odgovarajuci rezultat
+		//u zavisnosti od toga koji je mjesec unesen, printa se odgovarajuci rezultat
 		switch(mjesec){
 		case "jan":{
 			System.out.println("Januar " + godina + ". ima 31 dan.");
