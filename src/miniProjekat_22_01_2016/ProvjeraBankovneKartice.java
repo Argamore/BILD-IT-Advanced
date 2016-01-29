@@ -15,6 +15,7 @@ public class ProvjeraBankovneKartice {
 		
 		// kartica se provjerava, te se shodno tome ispisuje rezultat
 		if(isValid(broj) && prefixMatched() && getSize() >= 13 && getSize() <= 16){
+			cardCompany();
 			System.out.println(broj + " - kartica je validna");
 		}
 		else{
@@ -73,6 +74,23 @@ public class ProvjeraBankovneKartice {
 	// metoda koja vraca broj brojeva kreditne kartice
 	public static int getSize(){	
 		return broj.size();
+	}
+	public static void cardCompany(){
+		if(broj.get(broj.size() - 1) == 4){
+			System.out.println("Visa kartica.");
+		}
+		if(broj.get(broj.size() - 1) == 5){
+			System.out.println("Mastercard kartica.");
+		}
+		if(broj.get(broj.size() - 1) == 6){
+			System.out.println("Discover kartica.");
+		}
+		if(broj.get(broj.size() - 1) == 37){
+			System.out.println("American Express kartica.");
+		}
+		else if(broj.get(broj.size()- 1) < 4 || broj.get(broj.size() - 1) >37){
+			System.out.println("Nepoznata kartica.");
+		}
 	}
 }
 
