@@ -1,3 +1,6 @@
+/*
+ * Author: Sefer Kuduzovic
+ */
 package miniProjekat_14_01_2016;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -54,6 +57,7 @@ public class Kalendar {
     			unos = 4;
     		}
     		else if (unos == 3){
+    			// kod za ucitavanje fajla i njegovo ispisivanje..
     			try (BufferedReader citac = new BufferedReader(new FileReader("podsjetnici.txt"))) {
     				   String tekst = null;
     				   while ((tekst = citac.readLine()) != null) {
@@ -67,6 +71,7 @@ public class Kalendar {
     				}
     		}
     		else if(unos == 4){
+    			// izbornik
     			System.out.println("\nUnesite broj za: ");
     			System.out.print("\nKalendar: [1]");
     			System.out.print("\nUpis podsjetnika: [2]");
