@@ -985,7 +985,7 @@ public class Hotel extends JFrame implements ActionListener {
 						cancel.setVisible(false);
 						usernameinput.setText("");
 						passwordinput.setText("");
-						administratorwindow.show();
+						administratorwindow.setVisible(true);
 						JFrame info = new JFrame();
 						HashSet<String> not = hotelmgmt.viewNot();
 						if (!not.isEmpty()) {
@@ -1025,7 +1025,7 @@ public class Hotel extends JFrame implements ActionListener {
 						cancel.setVisible(false);
 						usernameinput.setText("");
 						passwordinput.setText("");
-						guestwindow.show();
+						guestwindow.setVisible(true);
 					} else {
 						JFrame info = new JFrame();
 						JOptionPane.showMessageDialog(info, "Username or Password is incorrect!");
@@ -1088,7 +1088,7 @@ public class Hotel extends JFrame implements ActionListener {
 				billtext.append(
 						"........................................................................................"
 								+ "\n\n" + "\t\t" + "TOTAL:  " + Double.toString(BILL));
-				billwindow.show();
+				billwindow.setVisible(true);
 			}
 		});
 
@@ -1296,7 +1296,7 @@ public class Hotel extends JFrame implements ActionListener {
 				cboxbuttons1.setVisible(false);
 				btnpanel1.setVisible(false);
 				searchtf.setText("");
-				billwindow.show();
+				billwindow.setVisible(true);
 				JFrame info = new JFrame();
 				JOptionPane.showMessageDialog(info, "Bill issued !");
 			}
@@ -1357,7 +1357,7 @@ public class Hotel extends JFrame implements ActionListener {
 					for (int i = 0; i < nums.length; i++) {
 						roomsarea.append("  " + nums[i].getNumber() + " ->> FREE" + "\n");
 					}
-					freeroomswindow.show(true);
+					freeroomswindow.setVisible(true);
 				} catch (NullPointerException ex) {
 					JFrame info = new JFrame();
 					JOptionPane.showMessageDialog(info, "No data found!");
@@ -1374,7 +1374,7 @@ public class Hotel extends JFrame implements ActionListener {
 					for (int i = 0; i < nums.length; i++) {
 						roomsarea.append("  " + nums[i].getNumber() + " ->> FREE" + "\n");
 					}
-					freeroomswindow.show(true);
+					freeroomswindow.setVisible(true);
 				} catch (NullPointerException ex) {
 					JFrame info = new JFrame();
 					JOptionPane.showMessageDialog(info, "No data found!");
@@ -1442,7 +1442,7 @@ public class Hotel extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		Hotel hotel = new Hotel();
-		hotel.show(true);
+		hotel.setVisible(true);
 	}
 
 	// other methods
