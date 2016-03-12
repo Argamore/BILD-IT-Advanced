@@ -425,6 +425,12 @@ public class Hotel extends JFrame implements ActionListener {
 		JTextField passtf = new JTextField(16);
 		passtf.setBounds(110, 380, 200, 30);
 		admintab1.add(passtf);
+		
+		// Brisanje notifikacija - Sefer //
+		
+		JButton delNotes = new JButton("Delete Notifications");
+		delNotes.setBounds(535, 400, 150, 30);
+		admintab1.add(delNotes);
 
 		JPanel btnpanel = new JPanel();
 		btnpanel.setBounds(0, 470, 800, 100);
@@ -1432,6 +1438,17 @@ public class Hotel extends JFrame implements ActionListener {
 		guestlogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guestwindow.dispose();
+			}
+		});
+		
+		/*
+		 * Dodano dugme za brisanje notifikacija - Sefer
+		 */
+		delNotes.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				hotelmgmt.deleteNotifications();
+				JFrame info = new JFrame();
+				JOptionPane.showMessageDialog(info, "Deleted all notifications!");
 			}
 		});
 

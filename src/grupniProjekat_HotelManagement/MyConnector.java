@@ -328,4 +328,20 @@ public class MyConnector implements HotelMgmt {
 		return notifications;
 	}
 
+	@Override
+	
+	/*
+	 * Dodano dugme za brisanje svih notifikacija - Sefer
+	 */
+	public void deleteNotifications() {
+		try{
+			PreparedStatement statement = connectToDB()
+					.prepareStatement("UPDATE notifications SET view = null");
+			statement.executeUpdate();
+		} catch (Exception e){
+			System.err.println(e.toString());
+		}
+		
+	}
+
 }

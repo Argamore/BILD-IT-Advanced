@@ -9,6 +9,7 @@ public interface HotelMgmt {
 	public void checkServices(String username, String service);
 	public void updateRoomNumber(String username, int roomnumber);
 	public void updateRoomType(String username, String roomtype, int roomnumber);
+	public void deleteNotifications();
 	public Guest guestLookup(String text);
 	public void guestCheckOut(String username);
 	public void Archive(String username, String password, String idnumber);
