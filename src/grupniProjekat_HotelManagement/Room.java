@@ -14,65 +14,60 @@ public class Room {
 	 */
 	private int number;
 	private String type;
-	private boolean occupied;
 	private double dayPrice;
+	private String username;
 
 
 	// no-arg konstruktor
 	public Room() {
-
 	}
-
+	
+	public Room(int number) {
+		this.number = number;
+	}
+	
+	public Room(double dayPrice) {
+		this.dayPrice = dayPrice;
+	}
+	
 	// konstruktor sa data fields
-	public Room(int number, String type, double dayPrice) {
+	public Room(int number, String type, double dayPrice, String username) {
 		this.number = number;
 		this.type = type;
 		this.dayPrice = dayPrice;
+		this.username = username;
 	}
 
 	/*
 	 * @SFR - Obrisana 3 Gettera, postavljeni getteri i setteri za sve..
 	 */
 
-	protected int getNumber() {
+	public int getNumber() {
 		return number;
 	}
 	
-	protected void setNumber(int number) {
+	public void setNumber(int number) {
 		this.number = number;
 	}
 	
-	protected String getType() {
+	public String getType() {
 		return type;
 	}
 	
-	protected void setType(String type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	
-	protected boolean isOccupied() {
-		return occupied;
-	}
-	
-	protected void setOccupied(boolean occupied) {
-		this.occupied = occupied;
-	}
-	
-	protected double getDayPrice() {
+	public double getDayPrice() {
 		return dayPrice;
 	}
 	
-	protected void setDayPrice(double dayPrice) {
-		this.dayPrice = dayPrice;
-	}
-	/*
-	 * @SEFER - ubaèena toString metoda
-	 */
-
-	@Override
-	public String toString() {
-		return "Room [number=" + number + ", type=" + type + ", occupied=" + occupied + ", dayPrice=" + dayPrice + "]";
+	public String getUsername() {
+		return username;
 	}
 	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	
 }

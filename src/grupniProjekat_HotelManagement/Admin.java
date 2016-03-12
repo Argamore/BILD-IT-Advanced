@@ -5,14 +5,11 @@ package grupniProjekat_HotelManagement;
  *
  */
 
-/*
- * Fix & Security Update: Sefer Kuduzovic
- */
 
 public final class Admin {
 
-	private static String username = "admin";
-	private static String password;
+	private String username;
+	private String password;
 
 	// konstruktor sa data fields
 	/**@SFR
@@ -21,29 +18,20 @@ public final class Admin {
 	 * @param password
 	 */
 	
-	/* 
-	* GETTERS & SETTTERS
-	*/
-	private Admin(String username, String password) {
-		Admin.setPassword(password);
+	public Admin(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
+	public Admin() {
 	}
 
-	@SuppressWarnings("unused")
-	private static String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	private static void setPassword(String password) {
-		Admin.password = password;
-	}
-
-	public static String getUsername() {
+	public String getUsername() {
 		return username;
-	}
-
-	@SuppressWarnings("unused")
-	private static void setUsername(final String username) {
-		Admin.username = username;
 	}
 
 }

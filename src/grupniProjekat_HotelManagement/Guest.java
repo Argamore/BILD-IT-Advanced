@@ -5,10 +5,6 @@ package grupniProjekat_HotelManagement;
  *
  */
 
-/*
- * Fix & Security Update: Sefer Kuduzovic
- */
-
 public class Guest {
 
 	private String username;
@@ -16,20 +12,43 @@ public class Guest {
 	private String name;
 	private String surname;
 	private String gender;
-	private int IDnumber;
+	private String IDnumber;
 	private int age;
 	private int roomNumber;
 	private String roomType;
 	private String timeCheckedin;
-	private double bill;
+	private int numofdays;
+	private String gym;
+	private String pool;
+	private String restaurant;
+	private String sauna;
+	private String cinema;
 
 	// no-arg konstruktor
 	public Guest() {
 	}
 
+	public Guest(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+	public Guest(String gym, String pool, String restaurant, String sauna, String cinema) {
+		this.gym = gym;
+		this.pool = pool;
+		this.restaurant = restaurant;
+		this.sauna = sauna;
+		this.cinema = cinema;
+	}
+
+	public Guest(String IDnumber) {
+		this.IDnumber = IDnumber;
+	}
+
 	// konstruktor sa data fields
-	public Guest(String username, String password, String name, String surname, String gender, int IDnumber, int age,
-			int roomNumber, String roomType, String timeCheckedin, double bill) {
+	public Guest(String username, String password, String name, String surname, String gender, String IDnumber, int age,
+			int roomNumber, String roomType, String timeCheckedin, int numofdays, String gym, String pool,
+			String restaurant, String sauna, String cinema) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -40,7 +59,12 @@ public class Guest {
 		this.roomNumber = roomNumber;
 		this.roomType = roomType;
 		this.timeCheckedin = timeCheckedin;
-		this.bill = bill;
+		this.numofdays = numofdays;
+		this.gym = gym;
+		this.pool = pool;
+		this.restaurant = restaurant;
+		this.sauna = sauna;
+		this.cinema = cinema;
 	}
 
 	// GET METODE KOJE VRACAJU VREDNOSTI ZA DATA FIELDS
@@ -48,8 +72,7 @@ public class Guest {
 		return username;
 	}
 
-	@SuppressWarnings("unused")
-	private String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
@@ -65,7 +88,7 @@ public class Guest {
 		return gender;
 	}
 
-	public int getIDnumber() {
+	public String getIDnumber() {
 		return IDnumber;
 	}
 
@@ -85,16 +108,15 @@ public class Guest {
 		return timeCheckedin;
 	}
 
-	public double getBill() {
-		return bill;
+	public int getNumOfDays() {
+		return numofdays;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	@SuppressWarnings("unused")
-	private void setPassword(final String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 
@@ -110,8 +132,8 @@ public class Guest {
 		this.gender = gender;
 	}
 
-	public void setIDnumber(int iDnumber) {
-		IDnumber = iDnumber;
+	public void setIDnumber(String IDnumber) {
+		this.IDnumber = IDnumber;
 	}
 
 	public void setAge(int age) {
@@ -130,20 +152,52 @@ public class Guest {
 		this.timeCheckedin = timeCheckedin;
 	}
 
-	public void setBill(double bill) {
-		this.bill = bill;
-	}
-	
-	/*
-	 * @SEFER - ubaèena toString metoda
-	 */
-
-	@Override
-	public String toString() {
-		return "Guest [username=" + username + ", password=" + password + ", name=" + name + ", surname=" + surname
-				+ ", gender=" + gender + ", IDnumber=" + IDnumber + ", age=" + age + ", roomNumber=" + roomNumber
-				+ ", roomType=" + roomType + ", timeCheckedin=" + timeCheckedin + ", bill=" + bill + "]";
+	public int getNumofdays() {
+		return numofdays;
 	}
 
-	
+	public void setNumofdays(int numofdays) {
+		this.numofdays = numofdays;
+	}
+
+	public String getGym() {
+		return gym;
+	}
+
+	public void setGym(String gym) {
+		this.gym = gym;
+	}
+
+	public String getPool() {
+		return pool;
+	}
+
+	public void setPool(String pool) {
+		this.pool = pool;
+	}
+
+	public String getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(String restaurant) {
+		this.restaurant = restaurant;
+	}
+
+	public String getSauna() {
+		return sauna;
+	}
+
+	public void setSauna(String sauna) {
+		this.sauna = sauna;
+	}
+
+	public String getCinema() {
+		return cinema;
+	}
+
+	public void setCinema(String cinema) {
+		this.cinema = cinema;
+	}
+
 }
