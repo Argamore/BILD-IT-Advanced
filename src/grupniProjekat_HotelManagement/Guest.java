@@ -27,7 +27,7 @@ public class Guest {
 	// no-arg konstruktor
 	public Guest() {
 	}
-
+	
 	public Guest(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -199,5 +199,19 @@ public class Guest {
 	public void setCinema(String cinema) {
 		this.cinema = cinema;
 	}
+	
+	/*
+	 * Sefer - dodan OPET toString *** 
+	 */
+
+	@Override
+	public String toString() {
+		return "Guest [username=" + username + ", name=" + name + ", surname=" + surname + ", gender=" + gender
+				+ ", IDnumber=" + IDnumber + ", age=" + age + ", roomNumber=" + roomNumber + ", roomType=" + roomType
+				+ ", timeCheckedin=" + timeCheckedin + ", numofdays=" + numofdays + ", gym=" + gym + ", pool=" + pool
+				+ ", restaurant=" + restaurant + ", sauna=" + sauna + ", cinema=" + cinema + "]";
+	}
+	
+	
 
 }

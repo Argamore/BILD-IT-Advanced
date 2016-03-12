@@ -1425,7 +1425,7 @@ public class Hotel extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				hotelmgmt.notify(guestwindow.getTitle());
 				JFrame info = new JFrame();
-				JOptionPane.showMessageDialog(info, "Administrator will be notified. Thank You for staying at us!");
+				JOptionPane.showMessageDialog(info, "Administrator will be notified. Thank You for staying with us!");
 			}
 		});
 		
