@@ -995,7 +995,7 @@ public class Hotel extends JFrame implements ActionListener {
 						JFrame info = new JFrame();
 						HashSet<String> not = hotelmgmt.viewNot();
 						if (!not.isEmpty()) {
-							JOptionPane.showMessageDialog(info, "User want to check out...\n" + not);
+							JOptionPane.showMessageDialog(info, "User for check-out: \n" + not);
 						}
 					} else {
 						JFrame info = new JFrame();
