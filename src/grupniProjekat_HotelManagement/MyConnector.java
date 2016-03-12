@@ -3,10 +3,15 @@ package grupniProjekat_HotelManagement;
 import java.sql.*;
 import java.util.*;
 
+/*
+ * Connector: Sefer 
+ * Bazna povezivanja: Halim
+ */
+
 public class MyConnector implements HotelMgmt {
 	// Input connector za povezivanje na bazu podataka
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "0000"; // KC's password
+	private static final String PASSWORD = ""; // KC's password // obrisao Sefer
 	private static final String DB = "hotel";
 
 	public static Connection connectToDB() throws SQLException {
