@@ -1,20 +1,40 @@
 package grupniProjekat_HotelManagement;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 
-import grupniProjekat_HotelManagement.Guest;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 
 public class Hotel extends JFrame implements ActionListener {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5539993119918298808L;
+	private static final long serialVersionUID = 1L;
 	String gen[] = { "?", "Male", "Female" };
 	String Gender = "";
 	String roomt[] = { "?", "Single", "Double", "Suite" };
@@ -35,10 +55,12 @@ public class Hotel extends JFrame implements ActionListener {
 	public static final int POOL_PRICE = 10;
 	public static final int SAUNA_PRICE = 10;
 
+	private JTable activeGuestTable;
+
 	HotelMgmt hotelmgmt = new MyConnector();
 
 	// main windows
-	// ******************************************************************************************
+	// *****************************************************************************************************************************
 
 	public Hotel() {
 		super("Hotel management");
@@ -97,7 +119,7 @@ public class Hotel extends JFrame implements ActionListener {
 		start.add(cancel);
 
 		// bill window
-		// *******************************************************************************************
+		// *******************************************************************************************************************************
 
 		JFrame billwindow = new JFrame("Administrator");
 		billwindow.setSize(600, 500);
@@ -122,7 +144,7 @@ public class Hotel extends JFrame implements ActionListener {
 		billpanel.add(billOK);
 
 		// admin window
-		// *************************************************************************************************
+		// **********************************************************************************************************************************
 
 		JFrame administratorwindow = new JFrame("Administrator");
 		administratorwindow.setSize(800, 600);
@@ -148,7 +170,7 @@ public class Hotel extends JFrame implements ActionListener {
 		administratorwindow.add(admintab3);
 
 		// room numbers free
-		// ***********************************************************************************************
+		// ******************************************************************************************************************************
 
 		JFrame freeroomswindow = new JFrame("Free rooms...");
 		freeroomswindow.setSize(300, 400);
@@ -168,7 +190,7 @@ public class Hotel extends JFrame implements ActionListener {
 		freepanel.add(roomsarea);
 
 		// guest window
-		// *********************************************************************************************
+		// **********************************************************************************************************************************
 
 		JFrame guestwindow = new JFrame();
 		guestwindow.setSize(800, 600);
@@ -255,6 +277,7 @@ public class Hotel extends JFrame implements ActionListener {
 
 		JButton viewFree = new JButton("View free");
 		viewFree.setBounds(400, 10, 100, 30);
+		viewFree.setEnabled(false);
 		roomtypeg.add(viewFree);
 
 		JLabel gymgl = new JLabel("Gym:");
@@ -262,7 +285,7 @@ public class Hotel extends JFrame implements ActionListener {
 		JLabel restaurantgl = new JLabel("Restaurant:");
 		JLabel saunagl = new JLabel("Sauna:");
 		JLabel cinemagl = new JLabel("Cinema:");
-		
+
 		JComboBox<String> gymg = new JComboBox<String>(GYM);
 		JComboBox<String> poolg = new JComboBox<String>(POOL);
 		JComboBox<String> restaurantg = new JComboBox<String>(RESTAURANT);
@@ -281,7 +304,7 @@ public class Hotel extends JFrame implements ActionListener {
 		cboxbuttonsg.add(cinemag);
 
 		// tabs admin window
-		// *****************************************************************************
+		// ********************************************************************************************************************************
 
 		JTabbedPane tp = new JTabbedPane();
 		tp.addTab("Check in", admintab1);
@@ -304,7 +327,7 @@ public class Hotel extends JFrame implements ActionListener {
 		});
 
 		// tab1
-		// ******************************************************************************************
+		// ********************************************************************************************************************************
 
 		JLabel GUEST = new JLabel("GUEST");
 		GUEST.setBounds(130, 10, 50, 20);
@@ -425,12 +448,6 @@ public class Hotel extends JFrame implements ActionListener {
 		JTextField passtf = new JTextField(16);
 		passtf.setBounds(110, 380, 200, 30);
 		admintab1.add(passtf);
-		
-		// Brisanje notifikacija - Sefer //
-		
-		JButton delNotes = new JButton("Delete Notifications");
-		delNotes.setBounds(535, 400, 150, 30);
-		admintab1.add(delNotes);
 
 		JPanel btnpanel = new JPanel();
 		btnpanel.setBounds(0, 470, 800, 100);
@@ -443,7 +460,7 @@ public class Hotel extends JFrame implements ActionListener {
 		btnpanel.add(checkin);
 
 		// tab2
-		// ******************************************************************************************
+		// *****************************************************************************************************************************
 
 		JLabel search = new JLabel("INPUT (Name or IDnumber or Username):");
 		search.setBounds(20, 10, 250, 30);
@@ -642,9 +659,77 @@ public class Hotel extends JFrame implements ActionListener {
 		checkout.setBounds(410, 12, 100, 40);
 		btnpanel1.add(checkout);
 
+		// tab3 ahmed code
+		// ******************************************************************************************
+		// parameters for log off button
+		JButton logOffGuestButton = new JButton("Log Off Guest");
+		logOffGuestButton.setBounds(15, 30, 120, 30);
+		admintab3.add(logOffGuestButton);
+
+		// parameters for log off all button
+		JButton logOffAllButton = new JButton("Log Off All");
+		logOffAllButton.setBounds(15, 60, 120, 30);
+		admintab3.add(logOffAllButton);
+
+		// Declaring Table
+		activeGuestTable = populateJTable();
+		// Declaring ScrolPane
+		JScrollPane scrollPane = new JScrollPane();
+		// dimensions and location for JTable
+		activeGuestTable.setBounds(15, 120, 740, 400);
+		scrollPane.setBounds(activeGuestTable.getBounds());
+		// adding JTable to scrollPane as view port
+		scrollPane.setViewportView(activeGuestTable);
+
+		// adding the scroll pane to the layout at center
+		admintab3.add(scrollPane);
+
+		/** Button signs off selected user */
+		logOffGuestButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// creating a MyConnector Object
+				MyConnector mc = new MyConnector();
+				// geting selected row int
+				int row = activeGuestTable.getSelectedRow();
+				// asigning the first value of table to getUsername
+				Object getUsername = activeGuestTable.getValueAt(row, 0);
+				String username = getUsername.toString();
+				// invoking setStatus method
+				mc.setStatus(username, false);
+				// Updating table and displaying it
+				activeGuestTable = populateJTable();
+				scrollPane.setViewportView(activeGuestTable);
+				JOptionPane.showMessageDialog(new JPanel(), username + " Logged off", "Log Out Guest...",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		/** method signs off all active users */
+		logOffAllButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// creating a MyCoonector object
+				MyConnector mc = new MyConnector();
+				// loping thru table and siging off users
+				for (int i = 0; i < activeGuestTable.getRowCount(); i++) {
+					// geting value at first column
+					Object getUsername = activeGuestTable.getValueAt(i, 0);
+					String username = getUsername.toString();
+					// invoking method set Status to false
+					mc.setStatus(username, false);
+				}
+				// displaying updated table
+				activeGuestTable = populateJTable();
+				scrollPane.setViewportView(activeGuestTable);
+				// displaying information message that process is completed
+				JOptionPane.showMessageDialog(new JPanel(), "All Guest have been Logged off", "Log Out Guest's...",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+
 		// button actions
-		// *****************************************************************************************
-		
+		// ********************************************************************************************************************************
+
 		genderchoser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int q = genderchoser.getSelectedIndex();
@@ -709,7 +794,7 @@ public class Hotel extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
+
 		gym.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int q = gym.getSelectedIndex();
@@ -995,7 +1080,7 @@ public class Hotel extends JFrame implements ActionListener {
 						JFrame info = new JFrame();
 						HashSet<String> not = hotelmgmt.viewNot();
 						if (!not.isEmpty()) {
-							JOptionPane.showMessageDialog(info, "User for check-out: \n" + not);
+							JOptionPane.showMessageDialog(info, "User want to check out...\n" + not);
 						}
 					} else {
 						JFrame info = new JFrame();
@@ -1031,6 +1116,12 @@ public class Hotel extends JFrame implements ActionListener {
 						cancel.setVisible(false);
 						usernameinput.setText("");
 						passwordinput.setText("");
+						// ahmed code
+						// creating an MyConnector object
+						MyConnector mc = new MyConnector();
+						// invoking setStatus method to set user to 1 meaning
+						// online
+						mc.setStatus(guest1.getUsername(), true);
 						guestwindow.setVisible(true);
 					} else {
 						JFrame info = new JFrame();
@@ -1078,8 +1169,8 @@ public class Hotel extends JFrame implements ActionListener {
 						restaurantbill = guest1.getNumOfDays() * RESTAURANT_PRICE;
 					}
 					if (guest1.getSauna().equals("YES")) {
-						billtext.append("  Sauna:  YES" + "     Day price:  " + SAUNA_PRICE + " (" + guest1.getNumOfDays()
-								+ ")" + "\n");
+						billtext.append("  Sauna:  YES" + "     Day price:  " + SAUNA_PRICE + " ("
+								+ guest1.getNumOfDays() + ")" + "\n");
 						saunabill = guest1.getNumOfDays() * SAUNA_PRICE;
 					}
 					if (guest1.getCinema().equals("YES")) {
@@ -1138,8 +1229,8 @@ public class Hotel extends JFrame implements ActionListener {
 						restaurantbill = guest1.getNumOfDays() * RESTAURANT_PRICE;
 					}
 					if (guest1.getSauna().equals("YES")) {
-						guesttxt.append("  Sauna:  YES" + "     Day price:  " + SAUNA_PRICE + " (" + guest1.getNumOfDays()
-								+ ")" + "\n");
+						guesttxt.append("  Sauna:  YES" + "     Day price:  " + SAUNA_PRICE + " ("
+								+ guest1.getNumOfDays() + ")" + "\n");
 						saunabill = guest1.getNumOfDays() * SAUNA_PRICE;
 					}
 					if (guest1.getCinema().equals("YES")) {
@@ -1165,23 +1256,8 @@ public class Hotel extends JFrame implements ActionListener {
 							Integer.parseInt(roomnumbertf.getText()), Room,
 							new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),
 							Integer.parseInt(daystf.getText()), Gym, Pool, Restaurant, Sauna, Cinema);
-					/*
-					 * Guest[] guests = hotelmgmt.readAll(); int counter = 0;
-					 * for (int i = 0; i < guests.length; i++) { if
-					 * (userntf.getText().equals(guests[i].getUsername()) ||
-					 * passtf.getText().equals(guests[i].getPassword()) ||
-					 * roomnumbertf.getText().equals(guests[i].getRoomNumber())
-					 * || idnumbertf.getText().equals(guests[i].getIDnumber()))
-					 * { counter++; } } if (counter == 0) {
-					 */
 					hotelmgmt.addGuest(guest1);
 					hotelmgmt.inRoom(guest1.getUsername(), guest1.getRoomNumber());
-					/*
-					 * } else { JFrame info = new JFrame();
-					 * JOptionPane.showMessageDialog(info,
-					 * "Already in use!\n(Room number/IDnumber/Username/Password)"
-					 * ); }
-					 */
 				} catch (NullPointerException ex) {
 					JFrame info = new JFrame();
 					JOptionPane.showMessageDialog(info, "Check data!");
@@ -1235,8 +1311,8 @@ public class Hotel extends JFrame implements ActionListener {
 						restaurantbill = guest1.getNumOfDays() * RESTAURANT_PRICE;
 					}
 					if (guest1.getSauna().equals("YES")) {
-						billtext.append("  Sauna:  YES" + "     Day price:  " + SAUNA_PRICE + " (" + guest1.getNumOfDays()
-								+ ")" + "\n");
+						billtext.append("  Sauna:  YES" + "     Day price:  " + SAUNA_PRICE + " ("
+								+ guest1.getNumOfDays() + ")" + "\n");
 						saunabill = guest1.getNumOfDays() * SAUNA_PRICE;
 					}
 					if (guest1.getCinema().equals("YES")) {
@@ -1257,6 +1333,7 @@ public class Hotel extends JFrame implements ActionListener {
 							Integer.parseInt(agetf1.getText()), Integer.parseInt(roomnumbertf1.getText()), Room,
 							new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),
 							Integer.parseInt(daystf1.getText()), Gym, Pool, Restaurant, Sauna, Cinema);
+					hotelmgmt.notifyClear(guest2.getUsername());
 					hotelmgmt.Archive(guest2.getIDnumber(), guest2.getUsername(), guest2.getPassword());
 					hotelmgmt.guestCheckOut(guest2.getUsername());
 				} catch (NullPointerException ex) {
@@ -1320,7 +1397,7 @@ public class Hotel extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
+
 		edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				roomtypechoser1.setEnabled(true);
@@ -1353,15 +1430,16 @@ public class Hotel extends JFrame implements ActionListener {
 				freerooms1.setEnabled(false);
 			}
 		});
-		
+
+		// vedran
 		freerooms.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				roomsarea.setText("");
-				Room[] nums = hotelmgmt.freeRooms();
+				ArrayList<Room> nums = hotelmgmt.freeRooms(Room);
 				try {
 					roomsarea.append("\n" + "       " + "FREE ROOMS:" + "\n");
-					for (int i = 0; i < nums.length; i++) {
-						roomsarea.append("  " + nums[i].getNumber() + " ->> FREE" + "\n");
+					for (int i = 0; i < nums.size(); i++) {
+						roomsarea.append("  " + nums.get(i).getNumber() + " ->> FREE" + "\n");
 					}
 					freeroomswindow.setVisible(true);
 				} catch (NullPointerException ex) {
@@ -1370,15 +1448,16 @@ public class Hotel extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
+
+		// vedran
 		freerooms1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				roomsarea.setText("");
-				Room[] nums = hotelmgmt.freeRooms();
+				ArrayList<Room> nums = hotelmgmt.freeRooms(Room);
 				try {
 					roomsarea.append("\n" + "       " + "FREE ROOMS:" + "\n");
-					for (int i = 0; i < nums.length; i++) {
-						roomsarea.append("  " + nums[i].getNumber() + " ->> FREE" + "\n");
+					for (int i = 0; i < nums.size(); i++) {
+						roomsarea.append("  " + nums.get(i).getNumber() + " ->> FREE" + "\n");
 					}
 					freeroomswindow.setVisible(true);
 				} catch (NullPointerException ex) {
@@ -1387,12 +1466,12 @@ public class Hotel extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
+
 		updateroom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				roomtypeg.setVisible(true);
 				saveupdates.setVisible(true);
-			
+
 			}
 		});
 
@@ -1402,7 +1481,7 @@ public class Hotel extends JFrame implements ActionListener {
 				saveupdates.setVisible(true);
 			}
 		});
-		
+
 		saveupdates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = guestwindow.getTitle();
@@ -1426,36 +1505,76 @@ public class Hotel extends JFrame implements ActionListener {
 				}
 			}
 		});
-		
+
 		guestcheckout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hotelmgmt.notify(guestwindow.getTitle());
 				JFrame info = new JFrame();
-				JOptionPane.showMessageDialog(info, "Administrator will be notified. Thank You for staying with us!");
+				JOptionPane.showMessageDialog(info, "Administrator will be notified. Thank You for staying at us!");
 			}
 		});
-		
+
 		guestlogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guestwindow.dispose();
 			}
 		});
-		
-		/*
-		 * Dodano dugme za brisanje notifikacija - Sefer
-		 */
-		delNotes.addActionListener(new ActionListener(){
+
+		// vedran
+		viewFree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				hotelmgmt.deleteNotifications();
-				JFrame info = new JFrame();
-				JOptionPane.showMessageDialog(info, "Deleted all notifications!");
+				roomsarea.setText("");
+				ArrayList<Room> nums = hotelmgmt.freeRooms(Room);
+				try {
+					roomsarea.append("\n" + "       " + "FREE ROOMS:" + "\n");
+					for (int i = 0; i < nums.size(); i++) {
+						roomsarea.append("  " + nums.get(i).getNumber() + " ->> FREE" + "\n");
+					}
+					freeroomswindow.setVisible(true);
+				} catch (NullPointerException ex) {
+					JFrame info = new JFrame();
+					JOptionPane.showMessageDialog(info, "No data found!");
+				}
 			}
 		});
 
 	}
 
+	// ahmed code
+	// returns a JTable populated from databse
+	private JTable populateJTable() {
+		// creating MyConnector object, to connect to database and return info
+		MyConnector mq = new MyConnector();
+		// duplicating ArrayList type Guest from database
+		ArrayList<Guest> list = mq.bindTable(); // invoking MyConnector class
+												// method
+
+		// JTable Column headers
+		String[] columnNames = { "UserName", "Name", "Surename", "Gender", "ID Number`", "Age", "Room#", "Room Type" };
+
+		// row data
+		Object[][] rows = new Object[list.size()][8];
+		for (int i = 0; i < list.size(); i++) {
+			// filling rows with info from database
+			rows[i][0] = list.get(i).getUsername();
+			rows[i][1] = list.get(i).getName();
+			rows[i][2] = list.get(i).getSurname();
+			rows[i][3] = list.get(i).getGender();
+			rows[i][4] = list.get(i).getIDnumber();
+			rows[i][5] = list.get(i).getAge();
+			rows[i][6] = list.get(i).getRoomNumber();
+			rows[i][7] = list.get(i).getRoomType();
+		}
+		DefaultTableModel model = new DefaultTableModel(rows, columnNames);
+		// creating a model for JTable of rows and columnNames
+		JTable table = new JTable(model);
+		table.setModel(model);
+		return table;
+
+	}
+
 	// main method
-	// ***********************************************************************************
+	// **********************************************************************************************************************************
 
 	public static void main(String[] args) {
 		Hotel hotel = new Hotel();
@@ -1463,7 +1582,7 @@ public class Hotel extends JFrame implements ActionListener {
 	}
 
 	// other methods
-	// **********************************************************************************
+	// ***********************************************************************************************************************************
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

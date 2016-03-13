@@ -5,13 +5,8 @@ package grupniProjekat_HotelManagement;
  *
  */
 
-/*
- * Fix & Security Update: Sefer Kuduzovic
- */
 public class Room {
-	/*
-	 * @SFR - Ubaèen boolean "occupied" - provjera da li je soba zauzeta
-	 */
+	
 	private int number;
 	private String type;
 	private double dayPrice;
@@ -39,7 +34,7 @@ public class Room {
 	}
 
 	/*
-	 * @SFR - Obrisana 3 Gettera, postavljeni getteri i setteri za sve..
+	 * @Sefer - Obrisana 3 Gettera, postavljeni getteri i setteri za sve..
 	 */
 
 	public int getNumber() {

@@ -5,6 +5,9 @@ package grupniProjekat_HotelManagement;
  *
  */
 
+/*
+ * Code fix: Sefer
+ */
 public class Guest {
 
 	private String username;
@@ -24,10 +27,43 @@ public class Guest {
 	private String sauna;
 	private String cinema;
 
+	// ahmed code
+	private boolean status;
+
+	// constructor to return list of active users
+	public Guest(String username, String name, String surname, String gender, String idnumber, int age, int roomnumber,
+			String roomtype) {
+		this.username = username;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.IDnumber = idnumber;
+		this.age = age;
+		this.roomNumber = roomnumber;
+		this.roomType = roomtype;
+
+	}
+
+	// constructor to change status of user in databse
+	public Guest(String username, boolean status) {
+		this.username = username;
+		this.status = status;
+	}
+
+	/** return boolean status */
+	public boolean getStatus() {
+		return status;
+	}
+
+	/** sets status tp true or false */
+	public void setActive(boolean status) {
+		this.status = status;
+	}
+
 	// no-arg konstruktor
 	public Guest() {
 	}
-	
+
 	public Guest(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -199,19 +235,13 @@ public class Guest {
 	public void setCinema(String cinema) {
 		this.cinema = cinema;
 	}
-	
-	/*
-	 * Sefer - dodan OPET toString *** 
-	 */
 
 	@Override
 	public String toString() {
-		return "Guest [username=" + username + ", name=" + name + ", surname=" + surname + ", gender=" + gender
-				+ ", IDnumber=" + IDnumber + ", age=" + age + ", roomNumber=" + roomNumber + ", roomType=" + roomType
-				+ ", timeCheckedin=" + timeCheckedin + ", numofdays=" + numofdays + ", gym=" + gym + ", pool=" + pool
-				+ ", restaurant=" + restaurant + ", sauna=" + sauna + ", cinema=" + cinema + "]";
+		return "Guest [username=" + username + ", password=" + password + ", name=" + name + ", surname=" + surname
+				+ ", gender=" + gender + ", IDnumber=" + IDnumber + ", age=" + age + ", roomNumber=" + roomNumber
+				+ ", roomType=" + roomType + ", timeCheckedin=" + timeCheckedin + ", numofdays=" + numofdays + ", gym="
+				+ gym + ", pool=" + pool + ", restaurant=" + restaurant + ", sauna=" + sauna + ", cinema=" + cinema
+				+ ", status=" + status + "]";
 	}
-	
-	
-
 }
