@@ -2,7 +2,6 @@ package grupniProjekat_HotelManagement;
 
 /**
  * @author Vedran Vidakovic
- *
  */
 
 
@@ -12,7 +11,7 @@ public final class Admin {
 	private String password;
 
 	// konstruktor sa data fields
-	/**@SFR
+	/**@Sefer
 	 * 
 	 * @param username
 	 * @param password

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public interface HotelMgmt {
+	/*
+	 * Interface Halim / Sefer / Ahmed / Vedran
+	 */
 
 	public void addGuest(Guest guest);
 	public void inRoom(String username, int roomnumber);
@@ -26,5 +29,4 @@ public interface HotelMgmt {
 	public void setStatus(String username, boolean status);
 	public ArrayList<Guest> bindTable();
 	public ArrayList<Room> freeRooms(String type);
-	public void checkRoom(int roomnumber);
 }

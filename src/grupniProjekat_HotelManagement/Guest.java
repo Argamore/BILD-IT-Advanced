@@ -1,13 +1,10 @@
 package grupniProjekat_HotelManagement;
 
 /**
- * @author Vedran Vidakovic
+ * Vedran Vidakovic + Halim, Ahmed, Sefer (mods)
  *
  */
 
-/*
- * Code fix: Sefer
- */
 public class Guest {
 
 	private String username;
@@ -27,7 +24,7 @@ public class Guest {
 	private String sauna;
 	private String cinema;
 
-	// ahmed code
+	// Ahmed code
 	private boolean status;
 
 	// constructor to return list of active users
@@ -104,6 +101,7 @@ public class Guest {
 	}
 
 	// GET METODE KOJE VRACAJU VREDNOSTI ZA DATA FIELDS
+	/**Sefer readded */
 	public String getUsername() {
 		return username;
 	}
@@ -236,12 +234,4 @@ public class Guest {
 		this.cinema = cinema;
 	}
 
-	@Override
-	public String toString() {
-		return "Guest [username=" + username + ", password=" + password + ", name=" + name + ", surname=" + surname
-				+ ", gender=" + gender + ", IDnumber=" + IDnumber + ", age=" + age + ", roomNumber=" + roomNumber
-				+ ", roomType=" + roomType + ", timeCheckedin=" + timeCheckedin + ", numofdays=" + numofdays + ", gym="
-				+ gym + ", pool=" + pool + ", restaurant=" + restaurant + ", sauna=" + sauna + ", cinema=" + cinema
-				+ ", status=" + status + "]";
-	}
 }

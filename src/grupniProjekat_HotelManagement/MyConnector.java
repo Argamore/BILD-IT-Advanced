@@ -1,20 +1,32 @@
 package grupniProjekat_HotelManagement;
 
-import java.sql.*;
-import java.util.*;
+/*
+ * Written by: Halim 
+ * Edited by: Ahmed, Vedran, Sefer
+ */
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * Sefer
- */
-
 public class MyConnector implements HotelMgmt {
+	/*
+	 * Sefer Kuduzoviæ
+	 */
+	
 	// Input connector za povezivanje na bazu podataka
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = ""; // KC's password
+	private static final String PASSWORD = "";
 	private static final String DB = "hotel";
+
+	boolean zauzeto = false;
 
 	public static Connection connectToDB() throws SQLException {
 		Connection connection = null;
@@ -29,7 +41,7 @@ public class MyConnector implements HotelMgmt {
 		return connection;
 	}
 
-	// admin username and password
+	// Admin username and password by Halim
 	// *************************************************************************************************
 
 	public Admin getAdminData(String username) {
@@ -47,7 +59,7 @@ public class MyConnector implements HotelMgmt {
 		return admin;
 	}
 
-	// guest username and password
+	// Guest username and password by Halim
 	// *************************************************************************************************
 
 	public Guest getGuestData(String username) {
@@ -65,7 +77,7 @@ public class MyConnector implements HotelMgmt {
 		return guest;
 	}
 
-	// read all guests
+	// read all guests by Halim
 	// *****************************************************************************************************
 
 	public Guest[] readAll() {
@@ -89,7 +101,7 @@ public class MyConnector implements HotelMgmt {
 		return guests;
 	}
 
-	// guest uname i password ako je u bazi idnumber
+	// guest username i password ako je u bazi idnumber by Halim
 	// ************************************************************************
 
 	public Guest archiveCheck(String idnumber) {
@@ -110,48 +122,67 @@ public class MyConnector implements HotelMgmt {
 	// guest check in
 	// ********************************************************************************************************
 	/*
-	 * Added room checking before adding guest - Sefer Kuduzovic
+	 * Added room & username checking before adding guest - Sefer Kuduzovic
 	 */
 	public void addGuest(Guest guest) {
 		try {
-			boolean zauzeto = false;
+			String korisnickoIme = guest.getUsername();
+			PreparedStatement statement2 = connectToDB()
+					.prepareStatement("SELECT * FROM guest WHERE username = '" + korisnickoIme + "';");
+			ResultSet result1 = statement2.executeQuery();
+			while (result1.next()){
+				String usernameDB = result1.getString("username");
+				if (usernameDB.equals(korisnickoIme)){
+					zauzeto = true;
+					JFrame info1 = new JFrame();
+					JOptionPane.showMessageDialog(info1, "Username already taken!");
+				}
+			}
 			int brojSobe = guest.getRoomNumber();
-			PreparedStatement statement1 = connectToDB().prepareStatement("SELECT * FROM guest WHERE roomnumber = '" + brojSobe + "';");
+			PreparedStatement statement1 = connectToDB()
+					.prepareStatement("SELECT * FROM guest WHERE roomnumber = '" + brojSobe + "';");
 			ResultSet result = statement1.executeQuery();
-			while (result.next()){
+			while (result.next()) {
 				int brojSobeDB = result.getInt("roomnumber");
-				if (brojSobeDB == brojSobe){
+				if (brojSobeDB == brojSobe) {
 					zauzeto = true;
 					JFrame info = new JFrame();
 					JOptionPane.showMessageDialog(info, "Room occupied!");
 				}
 			}
-			if(zauzeto != true){
-			PreparedStatement statement = connectToDB().prepareStatement("INSERT INTO guest(username, password,"
-					+ "name, surname, gender, idnumber, age, roomnumber, roomtype, timecheckedin, numofdays, gym, pool, "
-					+ "restaurant, sauna, cinema) VALUES('" + guest.getUsername() + "','" + guest.getPassword() + "','"
-					+ guest.getName() + "','" + guest.getSurname() + "','" + guest.getGender() + "','"
-					+ guest.getIDnumber() + "'," + guest.getAge() + "," + guest.getRoomNumber() + ",'"
-					+ guest.getRoomType() + "','" + guest.getTimeCheckedin() + "'," + guest.getNumOfDays() + ",'"
-					+ guest.getGym() + "','" + guest.getPool() + "','" + guest.getRestaurant() + "','"
-					+ guest.getSauna() + "','" + guest.getCinema() + "')");
-			statement.executeUpdate();
-			};
+			if (zauzeto != true) {
+				PreparedStatement statement = connectToDB().prepareStatement("INSERT INTO guest(username, password,"
+						+ "name, surname, gender, idnumber, age, roomnumber, roomtype, timecheckedin, numofdays, gym, pool, "
+						+ "restaurant, sauna, cinema) VALUES('" + guest.getUsername() + "','" + guest.getPassword()
+						+ "','" + guest.getName() + "','" + guest.getSurname() + "','" + guest.getGender() + "','"
+						+ guest.getIDnumber() + "'," + guest.getAge() + "," + guest.getRoomNumber() + ",'"
+						+ guest.getRoomType() + "','" + guest.getTimeCheckedin() + "'," + guest.getNumOfDays() + ",'"
+						+ guest.getGym() + "','" + guest.getPool() + "','" + guest.getRestaurant() + "','"
+						+ guest.getSauna() + "','" + guest.getCinema() + "')");
+				statement.executeUpdate();
+			}
+			;
 		} catch (Exception e) {
 			System.err.println("Ne radi addGuest check.");
 		}
 	}
 
+	// setting username for room number guest checked in  by Halim
+	// *********************************************************************************************************************************
 	public void inRoom(String username, int roomnumber) {
 		try {
-			PreparedStatement statement = connectToDB().prepareStatement(
-					"UPDATE room SET username = '" + username + "' WHERE number = " + roomnumber + ";");
-			statement.executeUpdate();
+			if (zauzeto != true) {
+				PreparedStatement statement = connectToDB().prepareStatement(
+						"UPDATE room SET username = '" + username + "' WHERE number = " + roomnumber + ";");
+				statement.executeUpdate();
+			}
 		} catch (Exception e) {
 			System.err.println(e.toString());
 		}
 	}
 
+	// update servisa hotela by Halim
+	// *************************************************************************************************************************************
 	public void checkServices(String username, String service) {
 		try {
 			PreparedStatement statement1a = connectToDB()
@@ -174,7 +205,7 @@ public class MyConnector implements HotelMgmt {
 		}
 	}
 
-	// guest updates
+	// guest updates by Halim
 	// ************************************************************************************************************************
 
 	public void updateRoomNumber(String username, int roomnumber) {
@@ -216,8 +247,8 @@ public class MyConnector implements HotelMgmt {
 		}
 	}
 
-	// lookup guest search button
-	// ******************************************************************************************************
+	// lookup guest search button by Halim
+	// **************************************************************************************************************************
 
 	public Guest guestLookup(String text) {
 		Guest guest = new Guest();
@@ -239,8 +270,8 @@ public class MyConnector implements HotelMgmt {
 		return guest;
 	}
 
-	// guest bill
-	// *******************************************************************************************************************
+	// guest bill by Halim
+	// *****************************************************************************************************************************
 
 	public Guest guestBill(String username) {
 		Guest guest = new Guest();
@@ -262,7 +293,7 @@ public class MyConnector implements HotelMgmt {
 		return guest;
 	}
 
-	// guset check out
+	// guset check out by Halim
 	// **********************************************************************************************************************
 
 	public void guestCheckOut(String username) {
@@ -278,10 +309,7 @@ public class MyConnector implements HotelMgmt {
 		}
 	}
 
-	/**
-	 * @author Vedran Vidakovic  
-	 *
-	 */
+	// Vedran: Provjera slobodnih soba
 	public ArrayList<Room> freeRooms(String type) {
 		ArrayList<Room> nums = new ArrayList<>();
 		try {
@@ -312,6 +340,8 @@ public class MyConnector implements HotelMgmt {
 		return room;
 	}
 
+	// arhiviranje gosta by Halim
+	// *************************************************************************************************************************
 	public void Archive(String idnumber, String username, String password) {
 		try {
 			PreparedStatement statement = connectToDB()
@@ -323,6 +353,8 @@ public class MyConnector implements HotelMgmt {
 		}
 	}
 
+	// notifikacija by Halim
+	// ********************************************************************************************************************************
 	public void notify(String username) {
 		try {
 			PreparedStatement statement = connectToDB()
@@ -358,7 +390,7 @@ public class MyConnector implements HotelMgmt {
 		return notifications;
 	}
 
-	// ahmed code
+	// Ahmed code - Guest login / Logoff
 	/** sets guest Status to 1 or 0, true or false */
 	public void setStatus(String username, boolean status) {
 		try {
@@ -392,12 +424,5 @@ public class MyConnector implements HotelMgmt {
 		}
 		// return list
 		return list;
-
 	}
-
-	@Override
-	public void checkRoom(int roomnumber) {
-		
-	}
-
 }

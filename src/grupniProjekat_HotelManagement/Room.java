@@ -1,7 +1,7 @@
 package grupniProjekat_HotelManagement;
 
 /**
- * @author Vedran Vidakovic
+ * @author Vedran Vidakovic & Sefer Kuduzovic
  *
  */
 
@@ -34,7 +34,7 @@ public class Room {
 	}
 
 	/*
-	 * @Sefer - Obrisana 3 Gettera, postavljeni getteri i setteri za sve..
+	 * @Sefer
 	 */
 
 	public int getNumber() {
